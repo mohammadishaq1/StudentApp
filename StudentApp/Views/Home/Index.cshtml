@@ -6,23 +6,80 @@
 <h4>Student Marks</h4>
 
 <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">New Student</button>
-<div id="myModal" class="modal fade" role="dialog">
-    <div class="modal-dialog">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal">&times;</button>
-                <h4 class="modal-title">Student Result</h4>
-            </div>
-            <div class="modal-body">
-                Content body
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-primary">Save</button> &nbsp;
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-            </div>
 
+
+
+
+
+
+<div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Student Result</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="container-fluid">
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(model => model.Name)
+                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @id = "txtName" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(model => model.Class)
+                            @Html.TextBoxFor(x => x.Class, new { @class = "form-control", @id = "txtClassName" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(model => model.RollNumber)
+                            @Html.TextBoxFor(model => model.RollNumber, new { @class = "form-control", @id = "txtRollNumber" })
+                        </div>
+                        <div class="form-group col-md-6">
+                            @Html.LabelFor(model => model.ExamId)
+                            @Html.DropDownListFor(model => model.ExamId, Model.ListOfExams, new { @class = "form-control", @id = "ListOfExams" })
+                        </div>
+                    </div>
+                        <fieldset>
+                            <legend>Student Marks</legend>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(model => model.SubjectId)
+                                @Html.DropDownListFor(model => model.SubjectId, Model.ListOfSubject, new { @class = "form-control", @id = "ListOfExams" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(model => model.TotalMarks)
+                                @Html.TextBoxFor(model => model.TotalMarks, new { @class = "form-control", @id = "txtTotalMarks" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                @Html.LabelFor(model => model.MarksObtained)
+                                @Html.TextBoxFor(model => model.MarksObtained, new { @class = "form-control", @id = "txtMarksObtained" })
+                            </div>
+                            <div class="form-group col-md-4">
+                                <input type="button" name="addtolist" value="Add to list" class="btn btn-danger" />
+                            </div>
+
+                            <table class="table table-condensed" style="width:100%" id="tableStudentMarks">
+                                <thead>
+                                    <tr>
+                                        
+                                        <th>Subject</th>
+                                        <th>Total Marks</th>
+                                        <th>Marks Obtained</th>
+                                        <th>Percentage</th>
+                                    </tr>
+                                </thead>
+                            </table>
+                        </fieldset>
+                    
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary">Save</button> &nbsp;
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+
+            </div>
         </div>
+
     </div>
 
-</div>
+
 
