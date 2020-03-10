@@ -24,15 +24,18 @@
         var percentage = (parseInt(marksObtained) / parseInt(totalMarks)) * 100;
 
         
-       var rowValue = "<tr><td>" +
+       var rowValue = 
            "<tr>" +
+
             "<td>" + subject + "</td>" +
             "<td>" + totalMarks + "</td>" +
             "<td>" + marksObtained + "</td>" +
             "<td>" + percentage + "</td>" +
-            "<td>" + "<input type='button' value='Remove' name='remove' class='btn btn-danger' onclick='removeMarks(subjectId)' /></td>" +
+           "<td>" + "<input type='button' value='Remove' name='remove' class='btn btn-danger' onclick='removeMarks(subjectId)' /></td>" +
+
             "</tr>";
-        $("#tableStudentMarks").append(rowValue);
+
+        $('#tableStudentMarks').append(rowValue);
           }
 
         </script>
@@ -91,7 +94,7 @@
                                 <input  type="button" id="btnAddToList" name="addtolist" value="Add to list" class="btn btn-primary" />
                             </div>
 
-                            <table class="table table-condensed" style="width:100%"  id="tableStudentMarks" >
+                            <table class="table" style="width:100%"  id="tableStudentMarks" >
                                 <thead>
                                     <tr>
 
@@ -102,7 +105,9 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                
+                                <tbody>
+
+                                </tbody>
                             </table>
                         </fieldset>
                     
