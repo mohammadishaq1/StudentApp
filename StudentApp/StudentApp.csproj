@@ -162,7 +162,9 @@
       <DependentUpon>StudentDBModel.tt</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewModel\StudentMarksViewModel.cs" />
     <Compile Include="ViewModel\StudentMasterViewModel.cs" />
+    <Compile Include="ViewModel\StudentViewModel.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Views\web.config" />

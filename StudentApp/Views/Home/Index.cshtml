@@ -3,14 +3,49 @@
     ViewBag.Title = "Index";
 }
 
+
+    <script src="~/Scripts/jquery-3.4.1.min.js"></script>
+
+    <script type="text/javascript">
+
+    $(document).ready(function () {
+        $("#btnAddToList").click(function () {
+            AddMarksIntoTable();
+           
+        });
+    });
+
+    function AddMarksIntoTable() {
+        var marksTable = $("#tableStudentMarks");
+        var subjectId = $("#ddSubject").val();
+        var subject = $("#ddSubject option:selected").text();
+        var totalMarks = $("#txtTotalMarks").val();
+        var marksObtained = $("#txtMarksObtained").val();
+        var percentage = (parseInt(marksObtained) / parseInt(totalMarks)) * 100;
+
+        
+       var rowValue = "<tr><td>" +
+           "<tr>" +
+            "<td>" + subject + "</td>" +
+            "<td>" + totalMarks + "</td>" +
+            "<td>" + marksObtained + "</td>" +
+            "<td>" + percentage + "</td>" +
+            "<td>" + "<input type='button' value='Remove' name='remove' class='btn btn-danger' onclick='removeMarks(subjectId)' /></td>" +
+            "</tr>";
+        $("#tableStudentMarks").append(rowValue);
+          }
+
+        </script>
+
+
+
+
+
+
+
 <h4>Student Marks</h4>
 
-<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">New Student</button>
-
-
-
-
-
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal" data-backdrop="static" data-keyboard="false">New Student</button>
 
 <div id="myModal" class="modal fade" role="dialog">
         <div class="modal-dialog">
@@ -42,30 +77,32 @@
                             <legend>Student Marks</legend>
                             <div class="form-group col-md-4">
                                 @Html.LabelFor(model => model.SubjectId)
-                                @Html.DropDownListFor(model => model.SubjectId, Model.ListOfSubject, new { @class = "form-control", @id = "ListOfExams" })
+                                @Html.DropDownListFor(model => model.SubjectId, Model.ListOfSubject, new { @class = "form-control", @id = "ddSubject" })
                             </div>
                             <div class="form-group col-md-4">
                                 @Html.LabelFor(model => model.TotalMarks)
-                                @Html.TextBoxFor(model => model.TotalMarks, new { @class = "form-control", @id = "txtTotalMarks" })
+                                @Html.TextBoxFor(model => model.TotalMarks, new { @class = "form-control", @id = "txtTotalMarks", @style="text-align:right" })
                             </div>
                             <div class="form-group col-md-4">
                                 @Html.LabelFor(model => model.MarksObtained)
-                                @Html.TextBoxFor(model => model.MarksObtained, new { @class = "form-control", @id = "txtMarksObtained" })
+                                @Html.TextBoxFor(model => model.MarksObtained, new { @class = "form-control", @id = "txtMarksObtained", @style="text-align:right" })
                             </div>
                             <div class="form-group col-md-4">
-                                <input type="button" name="addtolist" value="Add to list" class="btn btn-danger" />
+                                <input  type="button" id="btnAddToList" name="addtolist" value="Add to list" class="btn btn-primary" />
                             </div>
 
-                            <table class="table table-condensed" style="width:100%" id="tableStudentMarks">
+                            <table class="table table-condensed" style="width:100%"  id="tableStudentMarks" >
                                 <thead>
                                     <tr>
-                                        
+
                                         <th>Subject</th>
                                         <th>Total Marks</th>
                                         <th>Marks Obtained</th>
                                         <th>Percentage</th>
+                                        <th>Action</th>
                                     </tr>
                                 </thead>
+                                
                             </table>
                         </fieldset>
                     
