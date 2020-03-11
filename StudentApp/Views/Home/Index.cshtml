@@ -22,6 +22,8 @@
 
         function AddMarksIntoTable() {
 
+            
+        ///////////////////////////////////Validation/////////////////////////////////
             if ($("#txtMarksObtained").val() === "") {
                 alert("Please enter marks obtained");
                 $("#txtMarksObtained").focus();
@@ -41,7 +43,26 @@
                 return;
             }
 
+            ////////To check if subject already exist///////////
+            var subjectId = $("#ddSubject").val();
+            var tableMarks = $("#tableStudentMarks").find("tr:gt(0)");
+            var isReturn = false;
+                $.each(tableMarks,
+                function () {
+                    var listedSubjectId = $(this).find("td:eq(0)").text();
+                    if (listedSubjectId === subjectId) {
+                        alert("Already listed")
+                        isReturn = true;
+                        return;
+                    }
+                });
 
+            if (isReturn === true) {
+                return false;
+            }
+
+
+            ///////////////////////////////////Adding to List//////////////////
                 var marksTable = $("#tableStudentMarks");
                 var subjectId = $("#ddSubject").val();
                 var subject = $("#ddSubject option:selected").text();
@@ -203,7 +224,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody>
+                                <tbody id="MarksTableTest">
 
                                 </tbody>
                             </table>
