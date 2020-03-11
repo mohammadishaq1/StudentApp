@@ -15,15 +15,36 @@
         });
     });
 
-    function AddMarksIntoTable() {
-        var marksTable = $("#tableStudentMarks");
-        var subjectId = $("#ddSubject").val();
-        var subject = $("#ddSubject option:selected").text();
-        var totalMarks = $("#txtTotalMarks").val();
-        var marksObtained = $("#txtMarksObtained").val();
-        var percentage = (parseInt(marksObtained) / parseInt(totalMarks)) * 100;
+        function AddMarksIntoTable() {
 
-        
+            if ($("#txtMarksObtained").val() === "") {
+                alert("Please enter marks obtained");
+                $("#txtMarksObtained").focus();
+                return;
+            }
+
+
+            if ($("#txtTotalMarks").val() === "" || parseInt($("#txtTotalMarks").val()) === 0) {
+                alert("Please enter Total marks");
+                $("#txtTotalMarks").focus();
+                return;
+            }
+
+
+            if (parseInt($("#txtTotalMarks").val()) < parseInt($("#txtMarksObtained").val())) {
+                alert("Obtain mark should be less or equal to total marks");
+                return;
+            }
+
+
+                var marksTable = $("#tableStudentMarks");
+                var subjectId = $("#ddSubject").val();
+                var subject = $("#ddSubject option:selected").text();
+                var totalMarks = $("#txtTotalMarks").val();
+                var marksObtained = $("#txtMarksObtained").val();
+                var percentage = (parseInt(marksObtained) / parseInt(totalMarks)) * 100;
+
+            
        var rowValue = 
            "<tr>" +
 
