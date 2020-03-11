@@ -10,6 +10,6 @@ namespace StudentApp.ViewModel
         public int SubjectId { get; set; }
         public int TotalMarks { get; set; }
         public int ObtainedMarks { get; set; }
-        public decimal Percentage { get; set; }
+        public int Percentage { get; set; }
     }
 }

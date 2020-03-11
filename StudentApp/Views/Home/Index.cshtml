@@ -95,8 +95,10 @@
                  processData: false,
                  url: '/Home/Index',
                  data: JSON.stringify(objStudentViewModel),
-                 success: function (data) {
-            
+                success: function (data) {
+                    if (data.status === true) {
+                        alert(data.message)
+                    }
 
                  },
                  error: function () {

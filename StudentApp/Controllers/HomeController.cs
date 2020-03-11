@@ -41,7 +41,33 @@ namespace StudentApp.Controllers
         [HttpPost]
         public ActionResult Index(StudentViewModel objStudentViewModel)
         {
-            return Json("","");
+            StudentMaster objStudentMaster = new StudentMaster()
+            {
+                Name = objStudentViewModel.StudentName,
+                ClassName = objStudentViewModel.ClassName,
+                ExamId = objStudentViewModel.ExamId,
+                RollNumber = objStudentViewModel.RollNumber
+            };
+            objStudentDBEntities.StudentMasters.Add(objStudentMaster);
+            objStudentDBEntities.SaveChanges();
+
+            foreach(var item in objStudentViewModel.ListOfStudentMarks)
+            {
+                StudentDetail objStudentDetail = new StudentDetail()
+                {
+                    MarksObtained = item.ObtainedMarks,
+                    Percentage = item.Percentage,
+                    StudentId = objStudentMaster.StudentId,
+                    TotalMarks = item.TotalMarks,
+                    SubjectId = item.SubjectId
+
+                };
+                objStudentDBEntities.StudentDetails.Add(objStudentDetail);
+                objStudentDBEntities.SaveChanges();
+            }
+
+
+            return Json(new { message = "Data successfully added", status = true}, JsonRequestBehavior.AllowGet);
         }
     }
 }
