@@ -56,7 +56,7 @@ namespace StudentApp.Controllers
                 StudentDetail objStudentDetail = new StudentDetail()
                 {
                     MarksObtained = item.ObtainedMarks,
-                    Percentage = item.Percentage,
+                    Percentage = Convert.ToInt32(item.Percentage),
                     StudentId = objStudentMaster.StudentId,
                     TotalMarks = item.TotalMarks,
                     SubjectId = item.SubjectId
