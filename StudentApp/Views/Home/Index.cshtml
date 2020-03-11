@@ -14,7 +14,8 @@
         });
          $("#btnSave").click(function () {
             addStudentMarksToDatabase();
-        });
+         });
+       
     });
 
         ///////////////////////////////////Add Marks to Table///////////////////////////////////////////////////
@@ -56,11 +57,35 @@
             "<td>" + totalMarks + "</td>" +
             "<td>" + marksObtained + "</td>" +
             "<td>" + percentage + "</td>" +
-           "<td>" + "<input type='button' value='Remove' name='remove' class='btn btn-danger' onclick='removeMarks(subjectId)' /></td>" +
+           "<td>" + "<input type='button' value='Remove' name='remove' class='btn btn-danger' onclick='removeMarks(this)' /></td>" +
             "</tr>";
-        $('#tableStudentMarks').append(rowValue);
+            $('#tableStudentMarks').append(rowValue);
+            ResetTableMarks();
         }
 
+         ///////////////////////////////////Reset Fields and table///////////////////////////////////////////////////
+
+        function ResetMarksDetailsAfterSaving() {
+            $("#txtStudentName").val('');
+            $("#txtClassName").val('');
+            $("#txtRollNumber").val('');
+            $("#ddExam").val(1);
+            $("#tableStudentMarks").find("tr:gt(0)").remove();
+            ResetTableMarks();
+            $("#txtStudentName").val('').focus();
+        }
+
+        function ResetTableMarks() {
+            $("#ddSubject").val(1);
+            $("#txtTotalMarks").val('');
+            $("#txtMarksObtained").val('');
+            
+            
+        }
+
+        function removeMarks(rowValue) {
+            $(rowValue).closest('tr').remove();
+        }
         ///////////////////////////////////Add Marks to DataBase///////////////////////////////////////////////////
 
         function addStudentMarksToDatabase() {
@@ -97,7 +122,8 @@
                  data: JSON.stringify(objStudentViewModel),
                 success: function (data) {
                     if (data.status === true) {
-                        alert(data.message)
+                        alert(data.message);
+                        ResetMarksDetailsAfterSaving();
                     }
 
                  },
