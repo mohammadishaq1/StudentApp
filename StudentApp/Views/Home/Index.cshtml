@@ -11,9 +11,13 @@
     $(document).ready(function () {
         $("#btnAddToList").click(function () {
             AddMarksIntoTable();
-           
+        });
+         $("#btnSave").click(function () {
+            addStudentMarksToDatabase();
         });
     });
+
+        ///////////////////////////////////Add Marks to Table///////////////////////////////////////////////////
 
         function AddMarksIntoTable() {
 
@@ -47,17 +51,62 @@
             
        var rowValue = 
            "<tr>" +
-
+            "<td>" + subjectId + "</td>" +
             "<td>" + subject + "</td>" +
             "<td>" + totalMarks + "</td>" +
             "<td>" + marksObtained + "</td>" +
             "<td>" + percentage + "</td>" +
            "<td>" + "<input type='button' value='Remove' name='remove' class='btn btn-danger' onclick='removeMarks(subjectId)' /></td>" +
-
             "</tr>";
-
         $('#tableStudentMarks').append(rowValue);
-          }
+        }
+
+        ///////////////////////////////////Add Marks to DataBase///////////////////////////////////////////////////
+
+        function addStudentMarksToDatabase() {
+            var objStudentViewModel = {};
+            var listOfStudentMarks = [];
+            
+            var tableMarks = $("#tableStudentMarks").find("tr:gt(0)");
+
+            $.each(tableMarks, function () {
+                var studentMarks = {};
+                studentMarks.SubjectId = $(this).find("td:eq(0)").text();
+                studentMarks.TotalMarks = $(this).find("td:eq(2)").text();
+                studentMarks.ObtainedMarks = $(this).find("td:eq(3)").text();
+                studentMarks.Percentage = $(this).find("td:eq(4)").text();
+                listOfStudentMarks.push(studentMarks);
+
+            })
+            
+            objStudentViewModel.StudentName = $("#txtStudentName").val();
+            objStudentViewModel.ClassName = $("#txtClassName").val();
+            objStudentViewModel.ExamId = $("#ddExam").val();
+            objStudentViewModel.RollNumber = $("#txtRollNumber").val();
+            objStudentViewModel.ListOfStudentMarks = listOfStudentMarks;
+
+
+
+            $.ajax({
+                 async: true,
+                 dataType: 'JSON',
+                 type: 'POST',
+                 contentType: 'application/json; charset=utf-8',
+                 processData: false,
+                 url: '/Home/Index',
+                 data: JSON.stringify(objStudentViewModel),
+                 success: function (data) {
+            
+
+                 },
+                 error: function () {
+                     alert("There is error")
+
+                  }
+            });
+
+        }
+
 
         </script>
 
@@ -82,7 +131,7 @@
                     <div class="container-fluid">
                         <div class="form-group col-md-6">
                             @Html.LabelFor(model => model.Name)
-                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @id = "txtName" })
+                            @Html.TextBoxFor(x => x.Name, new { @class = "form-control", @id = "txtStudentName" })
                         </div>
                         <div class="form-group col-md-6">
                             @Html.LabelFor(model => model.Class)
@@ -94,7 +143,7 @@
                         </div>
                         <div class="form-group col-md-6">
                             @Html.LabelFor(model => model.ExamId)
-                            @Html.DropDownListFor(model => model.ExamId, Model.ListOfExams, new { @class = "form-control", @id = "ListOfExams" })
+                            @Html.DropDownListFor(model => model.ExamId, Model.ListOfExams, new { @class = "form-control", @id = "ddExam" })
                         </div>
                     </div>
                         <fieldset>
@@ -118,7 +167,7 @@
                             <table class="table" style="width:100%"  id="tableStudentMarks" >
                                 <thead>
                                     <tr>
-
+                                        <th>Subject ID</th>
                                         <th>Subject</th>
                                         <th>Total Marks</th>
                                         <th>Marks Obtained</th>
@@ -135,7 +184,7 @@
 
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-primary">Save</button> &nbsp;
+                    <button type="button" class="btn btn-primary" id="btnSave">Save</button> &nbsp;
                     <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
                 </div>
 

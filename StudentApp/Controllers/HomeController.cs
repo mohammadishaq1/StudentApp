@@ -37,5 +37,11 @@ namespace StudentApp.Controllers
 
             return View(objMasterViewModel);
         }
+
+        [HttpPost]
+        public ActionResult Index(StudentViewModel objStudentViewModel)
+        {
+            return Json("","");
+        }
     }
 }

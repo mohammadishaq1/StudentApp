@@ -11,6 +11,6 @@ namespace StudentApp.ViewModel
         public string ClassName { get; set; }
         public int ExamId { get; set; }
         public string RollNumber { get; set; }
-        public List<StudentMarksViewModel>ListOfStudentMarksViewModel { get; set; }
+        public List<StudentMarksViewModel>ListOfStudentMarks { get; set; }
     }
 }
