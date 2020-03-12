@@ -27,5 +27,6 @@ namespace StudentApp.ViewModel
         public int MarksObtained { get; set; }
         [Display(Name = "Percentage")]
         public decimal Percentage { get; set; }
+        public List<StudentModel> ListOfStudentModels { get; set; }
     }
 }

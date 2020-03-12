@@ -35,6 +35,22 @@ namespace StudentApp.Controllers
                                                   Value = obj.SubjectId.ToString()
                                               }).ToList();
 
+
+            List<StudentModel> listOfStudentModel = (
+                from objStu in objStudentDBEntities.StudentMasters
+                join
+                objExam in objStudentDBEntities.Exams on objStu.ExamId equals objExam.ExamId
+                select new StudentModel()
+                {
+                    ClassName=objStu.ClassName,
+                    RollNumber=objStu.RollNumber,
+                    StudentId=objStu.StudentId,
+                    StudentName=objStu.Name,
+                    ExamName=objExam.ExamName
+                }).ToList();
+            objMasterViewModel.ListOfStudentModels = listOfStudentModel;
+
+
             return View(objMasterViewModel);
         }
 

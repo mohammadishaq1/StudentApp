@@ -242,5 +242,29 @@
 
     </div>
 
+@*///////////////////////////////Student report card/////////////////////////////////////////////////*@
 
-
+<fieldset>
+    <legend>Student Details</legend>
+    <table style="width:100%" class="table table-bordered">
+        <thead>
+            <tr>
+                <th>Student Name</th>
+                <th>Exam</th>
+                <th>Class</th>
+                <th>Roll Number</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        @foreach(var item in Model.ListOfStudentModels)
+        {
+    <tr>
+        <td>@item.StudentName</td>
+        <td>@item.ExamName</td>
+        <td>@item.ClassName</td>
+        <td>@item.RollNumber</td>
+        <td><input type="button" value="Display Marks" name="details" onclick="StudentMarks(this)" class="btn btn-primary" /></td>
+    </tr>
+        }
+    </table>
+</fieldset>
