@@ -42,11 +42,11 @@ namespace StudentApp.Controllers
                 objExam in objStudentDBEntities.Exams on objStu.ExamId equals objExam.ExamId
                 select new StudentModel()
                 {
-                    ClassName=objStu.ClassName,
-                    RollNumber=objStu.RollNumber,
-                    StudentId=objStu.StudentId,
-                    StudentName=objStu.Name,
-                    ExamName=objExam.ExamName
+                    ClassName = objStu.ClassName,
+                    RollNumber = objStu.RollNumber,
+                    StudentId = objStu.StudentId,
+                    StudentName = objStu.Name,
+                    ExamName = objExam.ExamName
                 }).ToList();
             objMasterViewModel.ListOfStudentModels = listOfStudentModel;
 
@@ -94,13 +94,30 @@ namespace StudentApp.Controllers
                                                                 select new StudentMarksModel()
                                                                 {
                                                                     StudentId = studentId,
-                                                                    SubjectName=objSub.SubjectName,
-                                                                    MarksObtained=obj.MarksObtained,
-                                                                    TotalMarks=obj.TotalMarks,
-                                                                    Percentage=obj.Percentage
+                                                                    SubjectName = objSub.SubjectName,
+                                                                    MarksObtained = obj.MarksObtained,
+                                                                    TotalMarks = obj.TotalMarks,
+                                                                    Percentage = obj.Percentage
 
                                                                 }).ToList();
             return PartialView("_StudentMarksPartial", ListOfStudentMarksModels);
+        }
+
+        public JsonResult LoadTable()
+        {
+            List<StudentModel> listOfStudentModel = (
+                 from objStu in objStudentDBEntities.StudentMasters
+                 join
+                 objExam in objStudentDBEntities.Exams on objStu.ExamId equals objExam.ExamId
+                 select new StudentModel()
+                    {
+                         ClassName = objStu.ClassName,
+                         RollNumber = objStu.RollNumber,
+                         StudentId = objStu.StudentId,
+                         StudentName = objStu.Name,
+                         ExamName =objExam.ExamName
+                         }).ToList();
+            return Json(listOfStudentModel, JsonRequestBehavior.AllowGet);
         }
     }
 }

@@ -9,7 +9,7 @@
     <script type="text/javascript">
 
     $(document).ready(function () {
-       
+         LoadStudent();
         $("#btnAddToList").click(function () {
             AddMarksIntoTable();
         });
@@ -19,21 +19,47 @@
        
     });
 
-
-        function StudentMarksDisplay(studentId) {
-            console.log(studentId)
+          ///////////////////////////////////Load student Table//////////////////////////////////////////////////
+        function LoadStudent() {
+            
             $.ajax({
                 async: true,
                 type: 'GET',
-                url:'/Home/GetStudentMarks',
+                url:'/Home/LoadTable',
+                dataType: 'JSON',
+                contentType: 'application/json; charset=utf-8',
+                success: function (data) {
+                    var tableRow = "";
+                    $.each(data, function (index, value) {
+                        tableRow +=
+                            '<tr><td>' + value.StudentName + '</td><td>' + value.ExamName + '</td><td>' + value.ClassName + '</td><td>' + value.RollNumber + '</td><td>' + "<input type='button' value='Display Marks' name='details' onclick=StudentMarksDisplay(" + value.StudentId + ") class='btn btn-primary'/> </td ></tr >";
+                            
+                    });
+                    $('#tableLoadStudent').find("tr:gt(0)").remove();
+                    $('#tableLoadStudent').append(tableRow);
+                },
+                error: function () {
+                    alert("There is some error")
+                }
+                
+            });
+            
+        }
+
+
+          ///////////////////////////////////Display Student Marks//////////////////////////////////////////////////
+        function StudentMarksDisplay(studentId) {
+           
+          $.ajax({
+                async: true,
+                type: 'GET',
+                 url:'/Home/GetStudentMarks',
                 dataType: 'HTML',
                 contentType: 'application/json; charset=utf-8',
                 data: { studentId: studentId },
-                
                 success: function (data) {
-                    $('#divStudentMarks').html(data);
+                $('#divStudentMarks').html(data);
                     console.log(data);
-
                 },
                 error: function () {
                     alert("There is some error")
@@ -170,6 +196,7 @@
                     if (data.status === true) {
                         alert(data.message);
                         ResetMarksDetailsAfterSaving();
+                        LoadStudent();
                     }
 
                  },
@@ -249,7 +276,7 @@
                                         <th>Action</th>
                                     </tr>
                                 </thead>
-                                <tbody id="MarksTableTest">
+                                <tbody>
 
                                 </tbody>
                             </table>
@@ -271,7 +298,7 @@
 
 <fieldset>
     <legend>Student Details</legend>
-    <table style="width:100%" class="table table-bordered">
+    <table style="width:100%" class="table table-bordered" id="tableLoadStudent">
         <thead>
             <tr>
                 <th>Student Name</th>
@@ -281,16 +308,8 @@
                 <th>Action</th>
             </tr>
         </thead>
-        @foreach(var item in Model.ListOfStudentModels)
-        {
-    <tr>
-        <td>@item.StudentName</td>
-        <td>@item.ExamName</td>
-        <td>@item.ClassName</td>
-        <td>@item.RollNumber</td>
-        <td><input type="button" value="Display Marks" name="details" onclick="StudentMarksDisplay(@item.StudentId)" class="btn btn-primary" /></td>
-    </tr>
-        }
+       <tbody></tbody>
+    
     </table>
 </fieldset>
 
