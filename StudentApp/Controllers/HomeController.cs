@@ -85,5 +85,22 @@ namespace StudentApp.Controllers
 
             return Json(new { message = "Data successfully added", status = true}, JsonRequestBehavior.AllowGet);
         }
+
+        public PartialViewResult GetStudentMarks(int studentId)
+        {
+            List<StudentMarksModel> ListOfStudentMarksModels = (from obj in objStudentDBEntities.StudentDetails
+                                                                join objSub in objStudentDBEntities.Subjects on obj.SubjectId equals objSub.SubjectId
+                                                                where obj.StudentId == studentId
+                                                                select new StudentMarksModel()
+                                                                {
+                                                                    StudentId = studentId,
+                                                                    SubjectName=objSub.SubjectName,
+                                                                    MarksObtained=obj.MarksObtained,
+                                                                    TotalMarks=obj.TotalMarks,
+                                                                    Percentage=obj.Percentage
+
+                                                                }).ToList();
+            return PartialView("_StudentMarksPartial", ListOfStudentMarksModels);
+        }
     }
 }

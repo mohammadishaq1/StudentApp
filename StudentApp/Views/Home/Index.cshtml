@@ -9,6 +9,7 @@
     <script type="text/javascript">
 
     $(document).ready(function () {
+       
         $("#btnAddToList").click(function () {
             AddMarksIntoTable();
         });
@@ -17,6 +18,30 @@
          });
        
     });
+
+
+        function StudentMarksDisplay(studentId) {
+            console.log(studentId)
+            $.ajax({
+                async: true,
+                type: 'GET',
+                url:'/Home/GetStudentMarks',
+                dataType: 'HTML',
+                contentType: 'application/json; charset=utf-8',
+                data: { studentId: studentId },
+                
+                success: function (data) {
+                    $('#divStudentMarks').html(data);
+                    console.log(data);
+
+                },
+                error: function () {
+                    alert("There is some error")
+                }
+                
+            });
+            
+        }
 
         ///////////////////////////////////Add Marks to Table///////////////////////////////////////////////////
 
@@ -263,8 +288,16 @@
         <td>@item.ExamName</td>
         <td>@item.ClassName</td>
         <td>@item.RollNumber</td>
-        <td><input type="button" value="Display Marks" name="details" onclick="StudentMarks(this)" class="btn btn-primary" /></td>
+        <td><input type="button" value="Display Marks" name="details" onclick="StudentMarksDisplay(@item.StudentId)" class="btn btn-primary" /></td>
     </tr>
         }
     </table>
+</fieldset>
+
+
+<fieldset>
+    <legend>Student</legend>
+    <div id="divStudentMarks">
+
+    </div>
 </fieldset>
